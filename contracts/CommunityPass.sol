@@ -179,9 +179,7 @@ contract CommunityPass is ERC721, Ownable {
         super._beforeTokenTransfer(_from, _to, _tokenId);
         if (_from != address(0)) {
             if (!passAttr[_tokenId].vip) {
-                if (timestamps[_tokenId] + 8 weeks <= block.timestamp) {
-                    passAttr[_tokenId].vip = true;
-                }
+                timestamps[_tokenId] = block.timestamp;
             }
         }
     }
