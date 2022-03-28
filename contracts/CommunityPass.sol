@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Renderer.sol";
 
 contract CommunityPass is ERC721, Ownable {
-    //------------ STATE VARIABLES
+    //------------ STATE VARIABLES AND STRUCTS
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -43,6 +43,7 @@ contract CommunityPass is ERC721, Ownable {
     // renderer is stored as a separated contract so we can update it if we want to
     Renderer public renderer;
 
+    // toggle to (de)activate minting
     bool private _saleActive;
 
     //------------ EVENTS
@@ -58,14 +59,16 @@ contract CommunityPass is ERC721, Ownable {
         _tokenIds.increment();
 
         // set tiers and prices
+        tiers["Diamond"] = AccessTier(0.2 ether, true);
         tiers["Premium"] = AccessTier(0.06 ether, true);
         tiers["Basic"] = AccessTier(0.03 ether, true);
         tiers["Demo"] = AccessTier(0 ether, true);
 
         // set colors and prices
-        colors["Onyx"] = ColorPattern(
-            "#27272A",
-            "rgb(55,55,87)",
+        colors["Onyx"] = ColorPattern("#27272A", "#373757", 0 ether, true);
+        colors["CreativeContracts"] = ColorPattern(
+            "#4ADE80",
+            "#14B8A5",
             0 ether,
             true
         );
@@ -74,6 +77,13 @@ contract CommunityPass is ERC721, Ownable {
             "#270060",
             "#2E47BD",
             0.03 ether,
+            true
+        );
+
+        colors["Diamond"] = ColorPattern(
+            "#06B89E",
+            "#65B2D7",
+            0.12 ether,
             true
         );
     }
