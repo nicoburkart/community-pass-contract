@@ -3,12 +3,15 @@ pragma solidity ^0.8.0;
 import {Base64} from "./libraries/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
+//This is a seperate contract so we can update it seperatly from the main contract if needed.
 contract Renderer {
     function render(
         uint256 tokenId,
         string memory communityName,
         string memory accessTier,
-        string memory colorHex,
+        string memory colorPatternName,
+        string memory primaryColor,
+        string memory secondaryColor,
         bool vip
     ) public pure returns (string memory tokenURI) {
         string memory vipColor = vip ? "#25FF42" : "#E60000";
@@ -29,11 +32,11 @@ contract Renderer {
                 vipColor,
                 ";'/><path d='M421.756,210.181C420.347,210.181 419.202,211.325 419.202,212.735C419.202,214.144 420.347,215.289 421.756,215.289C423.166,215.289 424.31,214.144 424.31,212.735C424.31,211.325 423.166,210.181 421.756,210.181ZM421.756,210.514C422.982,210.514 423.977,211.509 423.977,212.735C423.977,213.96 422.982,214.955 421.756,214.955C420.531,214.955 419.535,213.96 419.535,212.735C419.535,211.509 420.531,210.514 421.756,210.514Z' style='fill:white;'/></g>",
                 "<defs><linearGradient id='_Linear1' x1='0' y1='0' x2='1' y2='0' gradientUnits='userSpaceOnUse' gradientTransform='matrix(480.115,-9.09108e-14,6.87349e-14,447.554,6.48198,145.865)'><stop offset='0' style='stop-color:",
-                colorHex,
+                primaryColor,
                 ";stop-opacity:1'/><stop offset='0.5' style='stop-color:",
-                "rgb(55,55,87)",
+                secondaryColor,
                 ";stop-opacity:1'/><stop offset='1' style='stop-color:",
-                colorHex,
+                primaryColor,
                 ";stop-opacity:1'/></linearGradient><linearGradient id='_Linear2' x1='0' y1='0' x2='1' y2='0' gradientUnits='userSpaceOnUse' gradientTransform='matrix(480.115,0,0,277.216,6.48198,145.865)'><stop offset='0' style='stop-color:white;stop-opacity:0.3'/><stop offset='0.37' style='stop-color:white;stop-opacity:1'/><stop offset='0.67' style='stop-color:white;stop-opacity:1'/><stop offset='1' style='stop-color:white;stop-opacity:0.3'/></linearGradient><linearGradient id='_Linear3' x1='0' y1='0' x2='1' y2='0' gradientUnits='userSpaceOnUse' gradientTransform='matrix(489.422,0,0,2e-06,5.28881,130)'><stop offset='0' style='stop-color:white;stop-opacity:0.3'/><stop offset='0.37' style='stop-color:white;stop-opacity:1'/><stop offset='0.67' style='stop-color:white;stop-opacity:1'/><stop offset='1' style='stop-color:white;stop-opacity:0.3'/></linearGradient></defs></svg>"
             )
         );
@@ -49,8 +52,8 @@ contract Renderer {
                         Base64.encode(bytes(nftSvg)),
                         '", "attributes": [ { "trait_type": "AccessTier", "value": ',
                         accessTier,
-                        '}, { "trait_type": "Attack Damage", "value": ',
-                        colorHex,
+                        '}, { "trait_type": "Color", "value": ',
+                        colorPatternName,
                         "} ]}"
                     )
                 )
