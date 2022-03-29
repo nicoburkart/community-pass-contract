@@ -168,7 +168,7 @@ contract CommunityPass is ERC721, Ownable {
 
     // If the nft has been held for x amount of time it will unlock the vip attribute
     // That way holder will be rewarded for holding the nft for longer
-    // If the nft is transfered before the x amount of time the timestamp will get a reset
+    // If the nft is transfered the timestamp and the vip status will get a reset
     function claimVipStatus(uint256 _tokenId)
         external
         whenOwnerOf(_tokenId)
@@ -180,7 +180,7 @@ contract CommunityPass is ERC721, Ownable {
 
     //------------ INTERNAL FUNCTIONS
 
-    //resets the timestamp if the nft hasn't claimed the vip status
+    //resets the timestamp if the nft is transfered
     function _beforeTokenTransfer(
         address _from,
         address _to,
@@ -188,9 +188,8 @@ contract CommunityPass is ERC721, Ownable {
     ) internal virtual override {
         super._beforeTokenTransfer(_from, _to, _tokenId);
         if (_from != address(0)) {
-            if (!passAttr[_tokenId].vip) {
-                timestamps[_tokenId] = block.timestamp;
-            }
+            timestamps[_tokenId] = block.timestamp;
+            passAttr[_tokenId].vip = false;
         }
     }
 
