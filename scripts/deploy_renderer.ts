@@ -1,5 +1,6 @@
 import { ethers } from "hardhat";
 
+//change hardhat.config for correct .env variables
 async function main() {
   const Renderer = await ethers.getContractFactory("Renderer");
   const renderer = await Renderer.deploy();

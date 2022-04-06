@@ -126,6 +126,18 @@ describe("CommunityPass", () => {
       });
       expect(await communityPass.balanceOf(rootAddress)).equals(tokenId);
     });
+
+    // whenMintFeeIncluded
+    it("Should return metadata", async () => {
+      await communityPass.flipSaleStarted();
+
+      await communityPass.mintNFT(TIERS[0].label, COLORS[0].label, {
+        from: rootAddress,
+        value: 0,
+      });
+
+      console.log(await communityPass.tokenURI(1));
+    });
   });
 
   /* describe("Transactions", () => {

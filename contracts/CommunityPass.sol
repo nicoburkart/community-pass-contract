@@ -101,7 +101,7 @@ contract CommunityPass is ERC721, Ownable {
     }
 
     // Transfers the whole contract balance to the owner of the contract
-    function withdrawAll() external {
+    function withdrawAll() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
     }
 
